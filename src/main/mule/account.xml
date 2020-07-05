@@ -29,6 +29,7 @@ output application/json
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="64dd0e07-5934-4226-95a1-812b8fc1a6bf" message="Try to test the code"/>
 	</flow>
 	<flow name="accountFlow1" doc:id="5d18df51-e51d-4186-ace8-96fd1d5f40c2" >
 		<http:listener doc:name="Listener" doc:id="0973e088-ff61-435e-b1da-55eb71b7da62" config-ref="account-api-httpListenerConfig" path="/"/>
