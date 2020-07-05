@@ -1,0 +1,45 @@
+#%RAML 1.0
+version: v1.01
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/95f5c2f5-b721-4dda-bc72-dc3876963086/ # 
+
+title: Account API
+types:
+ 
+ Accountdetails: !include module/AccountDatatype.raml
+
+/account:
+ get:
+   headers:
+     Requester-ID:
+        description: id of the person requesting the accounts                           information
+        required: true
+   queryParameters:
+     name: 
+      required: false
+     country:
+      required: false
+      type:
+        required: true
+        type: string
+        enum: ["personal", "business"]
+
+    
+   responses:
+     200:
+       body:
+         application/json:
+           type: Accountdetails[]   
+           examples:
+             output: !include /module/Account-TypeExample.raml
+ post:
+  body:
+    application/json:
+      examples:
+       output: !include /module/Account-TypeExample.raml
+  responses:
+     200:
+      body:
+        application/json:
+         example:
+          message: Post Succesfully 
+

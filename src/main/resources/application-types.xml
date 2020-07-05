@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="name" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="id" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="myname" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="array" format="json">
+      <types:shape format="weave" example="examples/usui.json"><![CDATA[%dw 2.0
+
+type array = {|
+  account: Array<{|    name: String,     id: String,     Account: String  |}>
+|} {"example": "{\"account\":[{\"name\":\"tring\",\"id\":\"number\",\"Account\":\"Integer\"}]}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="fd" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#c2f6c7c7-6abe-414c-aae3-465cf60c2b14">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="array"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

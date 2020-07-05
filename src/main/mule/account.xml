@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="44affcd1-bb43-41dd-afc0-972ca6c4efb0" >
+		<db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" user="mule" password="mule" database="training" />
+	</db:config>
+	<flow name="accountFlow" doc:id="838e677f-b48b-4443-afcd-ad2907deb77f" >
+		<http:listener doc:name="Listener" doc:id="ee32d241-084c-43d2-beaa-590294ca2980" config-ref="account-api-httpListenerConfig" path="/account/accountflow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="efcc26ab-4ce2-48af-9070-905fd758b528" message="dcvgvgvvvvgg"/>
+		<db:select doc:id="5ce5070d-40ef-40b8-a076-a025559ed5cc" config-ref="Database_Config">
+			<db:sql >select * from flights_customers</db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="c2f6c7c7-6abe-414c-aae3-465cf60c2b14" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	account: payload map ( payload01 , indexOfPayload01 ) -> {
+		name: payload01.name default "",
+		id: payload01.city default "",
+		Account: payload01.accountID default ""
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="accountFlow1" doc:id="5d18df51-e51d-4186-ace8-96fd1d5f40c2" >
+		<http:listener doc:name="Listener" doc:id="0973e088-ff61-435e-b1da-55eb71b7da62" config-ref="account-api-httpListenerConfig" path="/"/>
+		<logger level="INFO" doc:name="Logger" doc:id="0f320a6c-9502-472e-b1fd-854855cb1644" message="post account"/>
+		<set-payload value='#["flight added successfully but not really"]' doc:name="Set Payload" doc:id="fadb5a3e-a69d-47d6-b170-7d52bc302c26" />
+	</flow>
+</mule>
